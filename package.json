@@ -15,8 +15,8 @@
     "llm:check": "tsx --env-file-if-exists=.env.local scripts/llm-check.ts",
     "llm:smoke": "tsx --env-file-if-exists=.env.local scripts/llm-smoke.ts",
     "app:mac": "npm run build && electron-builder --mac --dir",
-    "dist:mac": "npm run build && electron-builder --mac",
-    "dist:win": "npm run build && electron-builder --win"
+    "dist:mac": "npm run build && electron-builder --mac --publish never",
+    "dist:win": "npm run build && electron-builder --win --publish never"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
