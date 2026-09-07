@@ -1,0 +1,35 @@
+# Builds the Windows desktop installer on a real Windows machine in the cloud.
+# Trigger it from the repo's Actions tab (or on a version tag), then download the
+# installer from the run's Artifacts. No local Windows machine required.
+name: Build Windows app
+
+on:
+  workflow_dispatch:        # run manually from the Actions tab
+  push:
+    tags: ['v*']            # or automatically on a version tag
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Installs Windows-native binaries for sharp, onnxruntime-node and the OCR
+      # canvas automatically — this is the whole reason the build runs on Windows.
+      - run: npm ci
+
+      - run: npm run dist:win
+        env:
+          # Skip code-signing; an unsigned installer still runs (SmartScreen warns once).
+          CSC_LINK: ''
+          CSC_KEY_PASSWORD: ''
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: dist-app/*.exe
+          if-no-files-found: error

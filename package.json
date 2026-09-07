@@ -1,0 +1,73 @@
+{
+  "name": "compare-docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "next dev -p 3737",
+    "build": "NEXT_DIST_DIR=.next-build next build && node scripts/prepare-standalone.mjs",
+    "start": "NEXT_DIST_DIR=.next-build next start -p 3737",
+    "test": "tsx --test tests/*.test.ts",
+    "check": "tsx scripts/check.ts",
+    "llm:check": "tsx --env-file-if-exists=.env.local scripts/llm-check.ts",
+    "llm:smoke": "tsx --env-file-if-exists=.env.local scripts/llm-smoke.ts",
+    "app:mac": "npm run build && electron-builder --mac --dir",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "mammoth": "^1.12.2",
+    "next": "^15.5.25",
+    "onnxruntime-node": "^1.29.0",
+    "pdfjs-dist": "^4.10.38",
+    "ppu-paddle-ocr": "^6.4.3",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sharp": "^0.35.4"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "electron": "^44.2.0",
+    "electron-builder": "^26.15.3",
+    "playwright": "^1.63.0",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  },
+  "build": {
+    "appId": "com.compare-docs.checker",
+    "productName": "SI-BL Checker",
+    "directories": {
+      "output": "dist-app",
+      "buildResources": "electron/resources"
+    },
+    "files": [
+      "electron/**/*",
+      "!**/node_modules/**"
+    ],
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.productivity"
+    },
+    "afterPack": "./electron/afterPack.cjs"
+  }
+}

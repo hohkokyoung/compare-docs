@@ -1,0 +1,16 @@
+node_modules/
+.next/
+.next-build/
+*.tsbuildinfo
+next-env.d.ts
+.env.local
+.env
+dist-app/
+
+# Real customer documents — never publish (synthetic samples live in samples/)
+fixtures/
+*.traineddata
+
+# Tests that run against private customer fixtures — kept local only
+tests/*.test.ts
+!tests/samples.test.ts
