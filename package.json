@@ -6,8 +6,8 @@
   "main": "electron/main.cjs",
   "scripts": {
     "dev": "next dev -p 3737",
-    "build": "NEXT_DIST_DIR=.next-build next build && node scripts/prepare-standalone.mjs",
-    "start": "NEXT_DIST_DIR=.next-build next start -p 3737",
+    "build": "cross-env NEXT_DIST_DIR=.next-build next build && node scripts/prepare-standalone.mjs",
+    "start": "cross-env NEXT_DIST_DIR=.next-build next start -p 3737",
     "test": "tsx --test tests/*.test.ts",
     "check": "tsx scripts/check.ts",
     "llm:check": "tsx --env-file-if-exists=.env.local scripts/llm-check.ts",
@@ -31,6 +31,7 @@
     "@types/node": "^26.4.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
+    "cross-env": "^10.1.0",
     "electron": "^44.2.0",
     "electron-builder": "^26.15.3",
     "playwright": "^1.63.0",
