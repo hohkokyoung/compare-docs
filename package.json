@@ -2,6 +2,8 @@
   "name": "compare-docs",
   "version": "0.1.0",
   "private": true,
+  "description": "Compare shipping instructions against a draft bill of lading and flag every discrepancy.",
+  "author": "hohkokyoung",
   "type": "module",
   "main": "electron/main.cjs",
   "scripts": {
